@@ -2,8 +2,12 @@ package xyz.xpcoder.commons.common.monitor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import xyz.xpcoder.commons.common.monitor.annoation.EnableMonitor;
 
 /**
@@ -16,6 +20,8 @@ import xyz.xpcoder.commons.common.monitor.annoation.EnableMonitor;
  */
 // TODO: 2018-07-10 18:51  测试配置
 @Slf4j
+@TestConfiguration
+@SpringJUnitConfig
 @SpringBootApplication
 public class MonitorAppTest {
 
