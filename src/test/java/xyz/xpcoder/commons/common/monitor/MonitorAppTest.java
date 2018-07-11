@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import xyz.xpcoder.commons.common.monitor.annoation.EnableMonitor;
 
 /**
  * 测试配置
@@ -15,7 +16,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
  */
 // TODO: 2018-07-10 18:51  测试配置
 @Slf4j
-//@EnableMonitor
 @SpringBootApplication
 public class MonitorAppTest {
 
