@@ -17,6 +17,11 @@ public class MonitorBaseData implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 请求 uuid
+     */
+    private String uuid;
+
+    /**
      * 方法执行时间
      */
     private long elapsedTime;

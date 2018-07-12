@@ -5,9 +5,13 @@ import jodd.exception.ExceptionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.CodeSignature;
+import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.util.StopWatch;
 import xyz.xpcoder.commons.common.monitor.config.MonitorAutoConfigure;
+import xyz.xpcoder.commons.common.monitor.config.MonitorProperties;
+import xyz.xpcoder.commons.common.monitor.helper.LogHelper;
 import xyz.xpcoder.commons.common.monitor.model.MonitorBaseData;
 
 import java.util.Optional;
@@ -23,6 +27,9 @@ import java.util.Optional;
 @ConditionalOnClass({MonitorAutoConfigure.class})
 public class DefaultLogPrintLogic implements LogPrintLogic {
 
+    @Autowired
+    MonitorProperties properties;
+
     @Override
     public Object build(ProceedingJoinPoint joinPoint) throws Throwable {
 
@@ -30,8 +37,11 @@ public class DefaultLogPrintLogic implements LogPrintLogic {
         Object proceed = null;
         MonitorBaseData data = new MonitorBaseData();
 
-        CodeSignature codeSignature = (CodeSignature) joinPoint.getSignature();
+        String uuidName = properties.getUuidName();
 
+        Optional.ofNullable(uuidName).ifPresent(name -> data.setUuid(MDC.get(name)));
+
+        CodeSignature codeSignature = (CodeSignature) joinPoint.getSignature();
 
         StringBuilder argsString = new StringBuilder();
 
@@ -57,7 +67,7 @@ public class DefaultLogPrintLogic implements LogPrintLogic {
 
             data.setSuccess(true);
             data.setElapsedTime(watch.getTotalTimeMillis());
-            data.setMethodSignature(joinPoint.getSignature().toLongString());
+            data.setMethodSignature(joinPoint.getSignature().toString());
 
         } catch (Exception ex) {
             data.setExceptionClass(ex.getClass().getTypeName());
@@ -66,9 +76,8 @@ public class DefaultLogPrintLogic implements LogPrintLogic {
         } finally {
             watch.stop();
             data.setElapsedTime(watch.getTotalTimeMillis());
-            log.warn("{} with args {} executed in {} ms", joinPoint.getSignature(), joinPoint.getArgs(), watch.getTotalTimeMillis());
 
-            log.info("data: {}", data);
+            LogHelper.printJsonLog(data);
         }
 
         return proceed;

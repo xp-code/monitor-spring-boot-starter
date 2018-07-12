@@ -20,6 +20,7 @@ import xyz.xpcoder.commons.common.monitor.annoation.EnableMonitor;
  */
 // TODO: 2018-07-10 18:51  测试配置
 @Slf4j
+@SpringBootTest
 @SpringBootApplication
 public class MonitorAppTest {
 

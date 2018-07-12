@@ -31,7 +31,6 @@
         </filter>
     </appender>
 
-
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/${APP_NAME}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -49,11 +48,32 @@
     </appender>
 
 
-    <logger name="xyz.xpcoder.commons.common.monitor.processor.DefaultLogPrintLogic" additivity="true">
-        <level value="info" />
-        <appender-ref ref="console"/>
-        <appender-ref ref="file" />
+    <appender name="monitor_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${APP_NAME}-${LOG_TYPE}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_PATH}/${APP_NAME}-${LOG_TYPE}.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>30</maxHistory>
+
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="xyz.xpcoder.commons.common.monitor.helper" additivity="false" level="INFO">
+        <appender-ref ref="monitor_file" />
     </logger>
+
+
+    <!--<root level="INFO">-->
+        <!--<appender-ref ref="file"/>-->
+        <!--<appender-ref ref="monitor_file"/>-->
+    <!--</root>-->
 
 
 </configuration>
