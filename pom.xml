@@ -6,7 +6,7 @@
 
     <groupId>xyz.xpcoder.commons</groupId>
     <artifactId>monitor-spring-boot-starter</artifactId>
-    <version>1.0-RELEASE</version>
+    <version>1.0</version>
 
     <properties>
 
@@ -26,18 +26,12 @@
         <junit.version>5.1.1</junit.version>
         <junit.vintage.version>${junit4.version}.0</junit.vintage.version>
         <junit.platform.version>1.0.2</junit.platform.version>
+        <gpg.executable>gpg2</gpg.executable>
 
 
     </properties>
 
 
-
-    <distributionManagement>
-        <repository>
-            <id>releases</id>
-            <url>https://github.com/xp-code/monitor-spring-boot-starter</url>
-        </repository>
-    </distributionManagement>
 
     <name>monitor-spring-boot-starter</name>
     <description>commons monitor base on spring boot</description>
@@ -151,24 +145,29 @@
     <profiles>
         <profile>
             <id>oss</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
                                 <goals>
-                                    <goal>jar</goal>
+                                    <goal>jar-no-fork</goal>
                                 </goals>
                             </execution>
                         </executions>
                     </plugin>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9.1</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -183,8 +182,10 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
                         <executions>
                             <execution>
+                                <id>sign-artifacts</id>
                                 <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
@@ -197,13 +198,14 @@
             <distributionManagement>
                 <snapshotRepository>
                     <id>oss</id>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
                 </snapshotRepository>
                 <repository>
                     <id>oss</id>
                     <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
             </distributionManagement>
+
         </profile>
     </profiles>
 
@@ -216,6 +218,17 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>oss</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>
