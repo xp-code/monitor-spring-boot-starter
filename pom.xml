@@ -23,14 +23,12 @@
 
         <!--test-->
         <junit4.version>4.12</junit4.version>
-        <junit.version>5.1.1</junit.version>
-        <junit.vintage.version>${junit4.version}.0</junit.vintage.version>
+        <junit.version>5.0.2</junit.version>
         <junit.platform.version>1.0.2</junit.platform.version>
         <gpg.executable>gpg2</gpg.executable>
 
 
     </properties>
-
 
 
     <name>monitor-spring-boot-starter</name>
@@ -130,11 +128,6 @@
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
             <version>${junit.platform.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
             <scope>test</scope>
         </dependency>
 
