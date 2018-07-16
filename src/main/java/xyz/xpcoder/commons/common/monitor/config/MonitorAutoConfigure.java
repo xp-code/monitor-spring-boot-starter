@@ -25,9 +25,9 @@ public class MonitorAutoConfigure {
     @Bean
     @ConditionalOnMissingBean
     public MethodMonitorProcessor methodMonitorProcessor(){
+        System.setProperty("logging.config","classpath:logback-monitor.xml");
         return new MethodMonitorProcessor();
     }
-
 
 
 

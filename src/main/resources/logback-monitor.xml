@@ -1,0 +1,36 @@
+<configuration>
+
+
+    <!--获取spring properties 配置-->
+    <springProperty scope="context" name="MDC_UUID" source="MDC_UUID" defaultValue="_uuid"/>
+    <springProperty scope="context" name="APP_NAME" source="monitor.project-name" defaultValue="app"/>
+    <springProperty scope="context" name="LOG_PATH" source="monitor.log-file" defaultValue="logs"/>
+    <springProperty scope="context" name="LOG_TYPE" source="monitor.log-type" defaultValue="monitor"/>
+    <springProperty scope="context" name="LOG_FILE_MAX_SIZE" source="monitor.max-size" defaultValue="2048" />
+    <springProperty scope="context" name="LOG_ASYNC_QUEUE_SIZE" source="monitor.async-queue-size" defaultValue="1024" />
+
+    <appender name="monitor_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${APP_NAME}-${LOG_TYPE}.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${APP_NAME}-${LOG_TYPE}.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+
+    </appender>
+
+    <appender name ="async_file" class= "ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold >0</discardingThreshold>
+        <queueSize>${LOG_ASYNC_QUEUE_SIZE}</queueSize>
+        <appender-ref ref = "monitor_file"/>
+    </appender>
+
+    <logger name="xyz.xpcoder.commons.common.monitor.helper.LogHelper">
+        <appender-ref ref="async_file" />
+    </logger>
+
+</configuration>
