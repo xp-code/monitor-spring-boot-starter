@@ -2,8 +2,10 @@ package xyz.xpcoder.commons.common.monitor.model;
 
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by laidu
@@ -15,6 +17,11 @@ import java.io.Serializable;
 public class MonitorBaseData implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+
+    public MonitorBaseData() {
+        this.callTime = new Date();
+    }
 
     /**
      * 请求 uuid
@@ -29,7 +36,8 @@ public class MonitorBaseData implements Serializable {
     /**
      * 方法调用时间
      */
-    private long callTime;
+    @DateTimeFormat
+    private Date callTime;
 
     /**
      * 方法签名

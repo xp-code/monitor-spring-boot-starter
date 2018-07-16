@@ -20,7 +20,7 @@ import xyz.xpcoder.commons.common.monitor.annoation.MethodMonitor;
  *
  * @author laidu
  */
-@Slf4j(topic = "")
+@Slf4j
 @Aspect
 @Component
 @ConditionalOnBean(LogPrintLogic.class)

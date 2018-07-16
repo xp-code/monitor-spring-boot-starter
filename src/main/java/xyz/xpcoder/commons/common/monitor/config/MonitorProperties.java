@@ -32,7 +32,22 @@ public class MonitorProperties {
     /**
      * 日志文件路径
      */
-    private String logFile = "logs/"+projectName+"-monitor.log";
+    private String logPath = "logs/";
+
+    /**
+     * 日志类型
+     */
+    private String logType = "monitor";
+
+    /**
+     * 异步打印日志队列大小
+     */
+    private Integer asyncQueueSize = 1024;
+
+    /**
+     * 日志文件大小（MB）
+     */
+    private Integer maxSize = 1024;
 
     /**
      * 日志级别
@@ -43,6 +58,7 @@ public class MonitorProperties {
      * uuid key
      */
     private String uuidName = "uuid";
+
 
 
 }
