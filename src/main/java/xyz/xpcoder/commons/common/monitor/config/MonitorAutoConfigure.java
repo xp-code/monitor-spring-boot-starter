@@ -1,10 +1,17 @@
 package xyz.xpcoder.commons.common.monitor.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.logging.LoggingApplicationListener;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import xyz.xpcoder.commons.common.monitor.helper.LogHelper;
+import xyz.xpcoder.commons.common.monitor.helper.impl.Slf4jLogHelper;
+import xyz.xpcoder.commons.common.monitor.processor.DefaultLogPrintLogic;
+import xyz.xpcoder.commons.common.monitor.processor.LogPrintLogic;
 import xyz.xpcoder.commons.common.monitor.processor.MethodMonitorProcessor;
 
 /**
@@ -20,13 +27,17 @@ import xyz.xpcoder.commons.common.monitor.processor.MethodMonitorProcessor;
 @EnableConfigurationProperties(MonitorProperties.class)
 public class MonitorAutoConfigure {
 
-    MonitorProperties properties;
+    @Bean
+    @ConditionalOnMissingBean
+    public LogHelper logHelper(){
+        return new Slf4jLogHelper();
+    }
 
     @Bean
     @ConditionalOnMissingBean
-    public MethodMonitorProcessor methodMonitorProcessor(){
-        System.setProperty("logging.config","classpath:logback-monitor.xml");
-        return new MethodMonitorProcessor();
+    @ConditionalOnClass({MonitorProperties.class})
+    public LogPrintLogic logPrintLogic(){
+        return new DefaultLogPrintLogic();
     }
 
 

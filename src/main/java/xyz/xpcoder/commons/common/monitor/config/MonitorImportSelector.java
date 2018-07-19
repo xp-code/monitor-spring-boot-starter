@@ -20,6 +20,6 @@ public class MonitorImportSelector implements ImportSelector {
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
         importingClassMetadata.getAnnotationAttributes(EnableMonitor.class.getName());
-        return new String[]{MonitorProperties.class.getName(), DefaultLogPrintLogic.class.getName(), MonitorAutoConfigure.class.getName()};
+        return new String[]{MonitorAutoConfigure.class.getName()};
     }
 }

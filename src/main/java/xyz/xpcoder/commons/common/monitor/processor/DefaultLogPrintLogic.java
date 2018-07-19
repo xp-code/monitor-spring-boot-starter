@@ -8,8 +8,9 @@ import org.aspectj.lang.reflect.CodeSignature;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
-import xyz.xpcoder.commons.common.monitor.config.MonitorAutoConfigure;
 import xyz.xpcoder.commons.common.monitor.config.MonitorProperties;
 import xyz.xpcoder.commons.common.monitor.helper.LogHelper;
 import xyz.xpcoder.commons.common.monitor.model.MonitorBaseData;
@@ -24,11 +25,13 @@ import java.util.Optional;
  */
 
 @Slf4j
-@ConditionalOnClass({MonitorAutoConfigure.class})
 public class DefaultLogPrintLogic implements LogPrintLogic {
 
     @Autowired
     MonitorProperties properties;
+
+    @Autowired
+    LogHelper logHelper;
 
     @Override
     public Object build(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -77,7 +80,7 @@ public class DefaultLogPrintLogic implements LogPrintLogic {
             watch.stop();
             data.setElapsedTime(watch.getTotalTimeMillis());
 
-            LogHelper.printJsonLog(data);
+            logHelper.printJsonLog(data);
         }
 
         return proceed;

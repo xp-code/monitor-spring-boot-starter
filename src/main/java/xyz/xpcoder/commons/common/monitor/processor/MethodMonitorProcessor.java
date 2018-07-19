@@ -10,6 +10,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import xyz.xpcoder.commons.common.monitor.annoation.MethodMonitor;
+import xyz.xpcoder.commons.common.monitor.config.MonitorAutoConfigure;
+import xyz.xpcoder.commons.common.monitor.helper.LogHelper;
 
 
 /**
@@ -23,7 +25,7 @@ import xyz.xpcoder.commons.common.monitor.annoation.MethodMonitor;
 @Slf4j
 @Aspect
 @Component
-@ConditionalOnBean(LogPrintLogic.class)
+@ConditionalOnBean(MonitorAutoConfigure.class)
 public class MethodMonitorProcessor {
 
     @Autowired

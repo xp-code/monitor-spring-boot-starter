@@ -1,6 +1,5 @@
 <configuration>
 
-
     <!--获取spring properties 配置-->
     <springProperty scope="context" name="MDC_UUID" source="MDC_UUID" defaultValue="_uuid"/>
     <springProperty scope="context" name="APP_NAME" source="monitor.project-name" defaultValue="app"/>
@@ -29,7 +28,7 @@
         <appender-ref ref = "monitor_file"/>
     </appender>
 
-    <logger name="xyz.xpcoder.commons.common.monitor.helper.LogHelper">
+    <logger name="xyz.xpcoder.commons.common.monitor.helper">
         <appender-ref ref="async_file" />
     </logger>
 
